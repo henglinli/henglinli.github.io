@@ -12,7 +12,7 @@
     <![endif]-->
 
     <!-- Le styles -->
-<link href='/assets/stylesheets/bootstrap.min-88238289010db19359d2181e634e95cd.css' type='text/css' rel='stylesheet' media='all'>
+<link href='/assets/stylesheets/bootstrap.min-e0e2914ec503fd07e90c90bb71395057.css' type='text/css' rel='stylesheet' media='all'>
 <link href='/assets/stylesheets/style-e81fa375b231bedf6cb2dbc6653570cc.css' type='text/css' rel='stylesheet' media='all'>
 <link href='/assets/stylesheets/google_prettify/sons-of-obsidian-afb0925bfa2d994f17dab93e13fbf999.css' type='text/css' rel='stylesheet' media='all'>
     <!-- Le fav and touch icons -->
@@ -60,9 +60,99 @@
 
 <div class="row-fluid">
   <div class="span12">
-    
+    <div class="post">
+  <h3 class="title"><a href="/tutorial/%E4%BD%BF%E7%94%A8ruhoh%E5%92%8Cgithub%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2">使用Ruhoh和Github搭建博客</a> <span class="date">2013-08-05</span></h3>
+
+  <div class="summary ellipsis">
+<h4 id="toc_0">&#32536;&#30001;</h4>
+
+<p>&#21069;&#19968;&#27573;&#26102;&#38388;&#25105;&#36824;&#22312;&#29992;golang&#65291;Google App Engine<a href="https://github.com/henglinli/goblog/" title="&#22522;&#20110;golang&#21644;GAE&#30340;&#21338;&#23458;&#31995;&#32479;">&#23454;&#29616;&#21338;&#23458;&#31995;&#32479;</a>&#65292;
+&#19968;&#26041;&#38754;&#30830;&#23454;&#26377;&#38656;&#27714;&#65292;&#21478;&#19968;&#26041;&#38754;&#24819;&#23398;&#20064;golang&#65292;&#20294;&#26159;&#21457;&#35273;&#22826;&#32791;&#26102;&#19988;&#20570;&#24471;&#19981;&#22815;&#22909;&#65292;
+&#20110;&#26159;Google&#24182;&#22810;&#27425;&#27604;&#36739;&#36873;&#25321;&#20102;<a href="http://ruhoh.com/" title="ruhoh&#20027;&#39029;">Ruhoh</a>&#12290;</p>
+
+<h4 id="toc_1">&#20934;&#22791;</h4>
+
+<p>&#20851;&#20110;<a href="http://pages.github.com/" title="&#20851;&#20110;Github Pages">Github Pages</a>&#65307;
+&#20851;&#20110;<a href="http://wowubuntu.com/markdown/" title="mardown&#20837;&#38376;">Markdown</a>&#20197;&#21450;<a href="http://zh.wikipedia.org/zh-cn/Markdown/" title="markdown wiki">Markdown Wiki</a>&#65307;
+&#20197;&#21450;<a href="http://ruhoh.com/docs/2/" title="ruhoh&#25991;&#26723;">Ruhuh&#25991;&#26723;</a>&#12290;</p>
+
+<h4 id="toc_2">&#27493;&#39588;</h4>
+
+<ul>
+<li>
+<p>&#23433;&#35013;&#65306;</p>
+
+<pre><code>$ git clone 'git://github.com/ruhoh/blog.git' 'blog' #&#33719;&#21462;&#20195;&#30721;
+$ cd blog 
+$ bundle install #&#23433;&#35013;&#20197;&#26469;&#65292;&#20250;&#23433;&#35013;ruhoh&#65292;&#24314;&#35758;&#25913;&#25104;&#28120;&#23453;&#30340;&#28304;
+# Gemfile&#25913;&#25104; source 'http://ruby.taobao.org/'
+$ bundle exec rackup -p 9292 #&#26412;&#22320;&#39044;&#35272;
+</code></pre>
+
+<p>&#36825;&#26679;&#23601;&#26377;&#19968;&#20010;&#22522;&#26412;&#30340;&#21338;&#23458;&#31995;&#32479;&#20102;&#12290;
+&#21487;&#20197;&#22312; http://localhost:9292/&#30475;&#21040;&#25928;&#26524;&#65292;
+&#20013;&#25991;&#23383;&#20307;&#20559;&#23567;&#65292;bootstrap&#21487;&#20197;&#23450;&#21046;&#65292;&#23383;&#20307;&#25913;&#25104;16px&#23601;&#34892;&#33298;&#26381;&#22810;&#20102;&#12290;
+&#36825;&#26679;&#30340;&#35805;&#65292;&#19979;&#38754;tags&#21644;categories&#30340;&#22270;&#26631;&#23601;&#27809;&#20102;&#12290;</p>
+</li>
+<li>
+<p>&#21457;&#34920;&#65306;</p>
+
+<pre><code>$ cd posts #&#24456;&#37325;&#35201;&#65292;&#19981;&#28982;compile&#20102;&#27809;&#29992;&#65292;&#25991;&#26723;&#23601;&#27809;&#35828;&#36825;&#20010;&#12290;
+$ ruhoh tutorial new "ruhoh how to"
+# &#22312;posts&#30446;&#24405;&#20013;&#24314;&#19968;&#20010;&ldquo;&#20998;&#31867;&rdquo;&#20026; tutorial&#30340;&ldquo;&#21517;&rdquo;&#20026;&ldquo;ruhoh how to&rdquo;&#30340;&#21338;&#25991;
+# &#36825;&#20010;&ldquo;&#20998;&#31867;&rdquo;&#26159;&#32473;&#33258;&#24049;&#31649;&#29702;&#26041;&#20415;&#29992;&#30340;&#19981;&#26159;categories
+</code></pre>
+
+<p>&#36866;&#24403;&#20462;&#25913;&#19968;&#19979;.md&#23601;&#21487;&#20197;&#20102;&#65292;&#20363;&#23376;:</p>
+
+<p><code>---</code></p>
+
+<p><code>title: '&#20351;&#29992;Ruhoh&#21644;Github&#25645;&#24314;&#21338;&#23458;'</code>
+<code>....&#21338;&#23458;&#30340;&#26631;&#39064;.....</code></p>
+
+<p><code>date: '2013-08-05'</code>
+<code>....&#26085;&#26399;&#65292;&#20250;&#29992;&#26469;&#25490;&#24207;.....</code></p>
+
+<p><code>description: '&#20351;&#29992;Ruhoh&#29983;&#25104;&#38745;&#24577;&#32593;&#39029;&#65292;&#24182;&#37096;&#32626;&#21040;Github Pages'</code>
+<code>....&#25551;&#36848;&#65292;&#35980;&#20284;&#19981;&#20250;render&#20986;&#26469;&#65292;&#32473;&#33258;&#24049;&#30475;&#30340;&#65311;.....</code></p>
+
+<p><code>tags:</code>
+<code>....&#26631;&#31614;&#65292;&#20250;&#33258;&#21160;&#21512;&#24182;&#32479;&#35745;&#21040;&#26631;&#31614;&#39029;&#38754;&#20013;.....</code></p>
+
+<p><code>- ruhoh</code></p>
+
+<p><code>- github</code></p>
+
+<p><code>- blog</code></p>
+
+<p><code>categories:</code>
+<code>....&#20998;&#31867;&#65292;&#20250;&#33258;&#21160;&#21512;&#24182;&#32479;&#35745;&#21040;&#20998;&#31867;&#39029;&#38754;&#20013;.....</code></p>
+
+<p><code>- tutorial</code></p>
+
+<p><code>---</code></p>
+
+<p><code>[&#35813;&#22788;&#23601;&#26159;&#26159;&#29616;&#22312;&#20320;&#30475;&#21040;&#30340;&#27491;&#25991;]</code></p>
+</li>
+<li>
+<p>&#20854;&#20182;</p>
+
+<ul>
+<li>&#25512;&#33616;&#20351;&#29992;<a href="http://jblevins.org/projects/markdown-mode/%E2%80%8E" title="markdown mode">Markdown Mode</a>&#12290;</li>
+<li>&#25105;&#30340;&#21338;&#23458;&#20195;&#30721;&#65288;&#37117;&#26159;markdown&#65289;&#22320;&#22336;<a href="https://github.com/henglinli/blog" title="henglinli/blog">https://github.com/henglinli/blog</a>&#12290;</li>
+</ul>
+</li>
+</ul>
+</div>
+
+  <div class="more">
+    <a href="/tutorial/%E4%BD%BF%E7%94%A8ruhoh%E5%92%8Cgithub%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2" class="btn btn-small">read more..</a>
+  </div>
+</div>
+
 <div class="pagination">
   <ul>
+      <li class="active"><a href="/">1</a></li>
   </ul>
 </div>
   </div>

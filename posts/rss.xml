@@ -3,6 +3,87 @@
   <channel>
     <title>henglinli.github.io</title>
     <link>https://henglinli.github.io</link>
-    <pubDate>2013-08-05 16:15:24 +0800</pubDate>
+    <pubDate>2013-08-05 19:34:07 +0800</pubDate>
+    <item>
+      <title>&#x4F7F;&#x7528;Ruhoh&#x548C;Github&#x642D;&#x5EFA;&#x535A;&#x5BA2;</title>
+      <link>https://henglinli.github.io/tutorial/%E4%BD%BF%E7%94%A8ruhoh%E5%92%8Cgithub%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2</link>
+      <pubDate>2013-08-05</pubDate>
+      <description>&lt;h4 id="toc_0"&gt;&#x7F18;&#x7531;&lt;/h4&gt;
+
+&lt;p&gt;&#x524D;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x6211;&#x8FD8;&#x5728;&#x7528;golang&#xFF0B;Google App Engine&lt;a href="https://github.com/henglinli/goblog/" title="&#x57FA;&#x4E8E;golang&#x548C;GAE&#x7684;&#x535A;&#x5BA2;&#x7CFB;&#x7EDF;"&gt;&#x5B9E;&#x73B0;&#x535A;&#x5BA2;&#x7CFB;&#x7EDF;&lt;/a&gt;&#xFF0C;
+&#x4E00;&#x65B9;&#x9762;&#x786E;&#x5B9E;&#x6709;&#x9700;&#x6C42;&#xFF0C;&#x53E6;&#x4E00;&#x65B9;&#x9762;&#x60F3;&#x5B66;&#x4E60;golang&#xFF0C;&#x4F46;&#x662F;&#x53D1;&#x89C9;&#x592A;&#x8017;&#x65F6;&#x4E14;&#x505A;&#x5F97;&#x4E0D;&#x591F;&#x597D;&#xFF0C;
+&#x4E8E;&#x662F;Google&#x5E76;&#x591A;&#x6B21;&#x6BD4;&#x8F83;&#x9009;&#x62E9;&#x4E86;&lt;a href="http://ruhoh.com/" title="ruhoh&#x4E3B;&#x9875;"&gt;Ruhoh&lt;/a&gt;&#x3002;&lt;/p&gt;
+
+&lt;h4 id="toc_1"&gt;&#x51C6;&#x5907;&lt;/h4&gt;
+
+&lt;p&gt;&#x5173;&#x4E8E;&lt;a href="http://pages.github.com/" title="&#x5173;&#x4E8E;Github Pages"&gt;Github Pages&lt;/a&gt;&#xFF1B;
+&#x5173;&#x4E8E;&lt;a href="http://wowubuntu.com/markdown/" title="mardown&#x5165;&#x95E8;"&gt;Markdown&lt;/a&gt;&#x4EE5;&#x53CA;&lt;a href="http://zh.wikipedia.org/zh-cn/Markdown/" title="markdown wiki"&gt;Markdown Wiki&lt;/a&gt;&#xFF1B;
+&#x4EE5;&#x53CA;&lt;a href="http://ruhoh.com/docs/2/" title="ruhoh&#x6587;&#x6863;"&gt;Ruhuh&#x6587;&#x6863;&lt;/a&gt;&#x3002;&lt;/p&gt;
+
+&lt;h4 id="toc_2"&gt;&#x6B65;&#x9AA4;&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&#x5B89;&#x88C5;&#xFF1A;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ git clone &amp;#39;git://github.com/ruhoh/blog.git&amp;#39; &amp;#39;blog&amp;#39; #&#x83B7;&#x53D6;&#x4EE3;&#x7801;
+$ cd blog 
+$ bundle install #&#x5B89;&#x88C5;&#x4EE5;&#x6765;&#xFF0C;&#x4F1A;&#x5B89;&#x88C5;ruhoh&#xFF0C;&#x5EFA;&#x8BAE;&#x6539;&#x6210;&#x6DD8;&#x5B9D;&#x7684;&#x6E90;
+# Gemfile&#x6539;&#x6210; source &amp;#39;http://ruby.taobao.org/&amp;#39;
+$ bundle exec rackup -p 9292 #&#x672C;&#x5730;&#x9884;&#x89C8;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&#x8FD9;&#x6837;&#x5C31;&#x6709;&#x4E00;&#x4E2A;&#x57FA;&#x672C;&#x7684;&#x535A;&#x5BA2;&#x7CFB;&#x7EDF;&#x4E86;&#x3002;
+&#x53EF;&#x4EE5;&#x5728; http://localhost:9292/&#x770B;&#x5230;&#x6548;&#x679C;&#xFF0C;
+&#x4E2D;&#x6587;&#x5B57;&#x4F53;&#x504F;&#x5C0F;&#xFF0C;bootstrap&#x53EF;&#x4EE5;&#x5B9A;&#x5236;&#xFF0C;&#x5B57;&#x4F53;&#x6539;&#x6210;16px&#x5C31;&#x884C;&#x8212;&#x670D;&#x591A;&#x4E86;&#x3002;
+&#x8FD9;&#x6837;&#x7684;&#x8BDD;&#xFF0C;&#x4E0B;&#x9762;tags&#x548C;categories&#x7684;&#x56FE;&#x6807;&#x5C31;&#x6CA1;&#x4E86;&#x3002;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&#x53D1;&#x8868;&#xFF1A;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cd posts #&#x5F88;&#x91CD;&#x8981;&#xFF0C;&#x4E0D;&#x7136;compile&#x4E86;&#x6CA1;&#x7528;&#xFF0C;&#x6587;&#x6863;&#x5C31;&#x6CA1;&#x8BF4;&#x8FD9;&#x4E2A;&#x3002;
+$ ruhoh tutorial new &amp;quot;ruhoh how to&amp;quot;
+# &#x5728;posts&#x76EE;&#x5F55;&#x4E2D;&#x5EFA;&#x4E00;&#x4E2A;&#x201C;&#x5206;&#x7C7B;&#x201D;&#x4E3A; tutorial&#x7684;&#x201C;&#x540D;&#x201D;&#x4E3A;&#x201C;ruhoh how to&#x201D;&#x7684;&#x535A;&#x6587;
+# &#x8FD9;&#x4E2A;&#x201C;&#x5206;&#x7C7B;&#x201D;&#x662F;&#x7ED9;&#x81EA;&#x5DF1;&#x7BA1;&#x7406;&#x65B9;&#x4FBF;&#x7528;&#x7684;&#x4E0D;&#x662F;categories
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&#x9002;&#x5F53;&#x4FEE;&#x6539;&#x4E00;&#x4E0B;.md&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#xFF0C;&#x4F8B;&#x5B50;:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;---&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;title: &amp;#39;&#x4F7F;&#x7528;Ruhoh&#x548C;Github&#x642D;&#x5EFA;&#x535A;&#x5BA2;&amp;#39;&lt;/code&gt;
+&lt;code&gt;....&#x535A;&#x5BA2;&#x7684;&#x6807;&#x9898;.....&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;date: &amp;#39;2013-08-05&amp;#39;&lt;/code&gt;
+&lt;code&gt;....&#x65E5;&#x671F;&#xFF0C;&#x4F1A;&#x7528;&#x6765;&#x6392;&#x5E8F;.....&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;description: &amp;#39;&#x4F7F;&#x7528;Ruhoh&#x751F;&#x6210;&#x9759;&#x6001;&#x7F51;&#x9875;&#xFF0C;&#x5E76;&#x90E8;&#x7F72;&#x5230;Github Pages&amp;#39;&lt;/code&gt;
+&lt;code&gt;....&#x63CF;&#x8FF0;&#xFF0C;&#x8C8C;&#x4F3C;&#x4E0D;&#x4F1A;render&#x51FA;&#x6765;&#xFF0C;&#x7ED9;&#x81EA;&#x5DF1;&#x770B;&#x7684;&#xFF1F;.....&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;tags:&lt;/code&gt;
+&lt;code&gt;....&#x6807;&#x7B7E;&#xFF0C;&#x4F1A;&#x81EA;&#x52A8;&#x5408;&#x5E76;&#x7EDF;&#x8BA1;&#x5230;&#x6807;&#x7B7E;&#x9875;&#x9762;&#x4E2D;.....&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;- ruhoh&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;- github&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;- blog&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;categories:&lt;/code&gt;
+&lt;code&gt;....&#x5206;&#x7C7B;&#xFF0C;&#x4F1A;&#x81EA;&#x52A8;&#x5408;&#x5E76;&#x7EDF;&#x8BA1;&#x5230;&#x5206;&#x7C7B;&#x9875;&#x9762;&#x4E2D;.....&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;- tutorial&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;---&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;[&#x8BE5;&#x5904;&#x5C31;&#x662F;&#x662F;&#x73B0;&#x5728;&#x4F60;&#x770B;&#x5230;&#x7684;&#x6B63;&#x6587;]&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&#x5176;&#x4ED6;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&#x63A8;&#x8350;&#x4F7F;&#x7528;&lt;a href="http://jblevins.org/projects/markdown-mode/%E2%80%8E" title="markdown mode"&gt;Markdown Mode&lt;/a&gt;&#x3002;&lt;/li&gt;
+&lt;li&gt;&#x6211;&#x7684;&#x535A;&#x5BA2;&#x4EE3;&#x7801;&#xFF08;&#x90FD;&#x662F;markdown&#xFF09;&#x5730;&#x5740;&lt;a href="https://github.com/henglinli/blog" title="henglinli/blog"&gt;https://github.com/henglinli/blog&lt;/a&gt;&#x3002;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr&gt;
+</description>
+    </item>
   </channel>
 </rss>
