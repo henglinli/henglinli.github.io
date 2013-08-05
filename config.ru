@@ -1,4 +1,6 @@
-# This file is used by Rack-based servers to start the application.
+require 'rack'
+require 'ruhoh'
+run Ruhoh::Program.preview
 
-require ::File.expand_path('../config/environment',  __FILE__)
-run Blog::Application
+# To preview your blog in "production" mode:
+# run Ruhoh::Program.preview(:env => 'production')
