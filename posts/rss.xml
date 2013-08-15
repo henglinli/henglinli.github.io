@@ -3,7 +3,43 @@
   <channel>
     <title>henglinli.github.io</title>
     <link>https://henglinli.github.io</link>
-    <pubDate>2013-08-08 10:36:44 +0800</pubDate>
+    <pubDate>2013-08-15 10:59:16 +0800</pubDate>
+    <item>
+      <title>&#x5B66;&#x4E60;libcrafter</title>
+      <link>https://henglinli.github.io/tutorial/%E5%AD%A6%E4%B9%A0libcrafter</link>
+      <pubDate>2013-08-15</pubDate>
+      <description>&lt;h3 id="toc_0"&gt;libcrafter&#x7B80;&#x4ECB;&lt;/h3&gt;
+
+&lt;p&gt;&#x5B98;&#x65B9;&#x7684;&#x7B80;&#x4ECB;&#xFF1A;libcrafter&#xFF0D;&#xFF0D;A high level library for C++ to generate and sniff network packets&#x3002;&#x5C31;&#x4E0D;&#x7FFB;&#x8BD1;&#x4E86;&#xFF0C;&#x6211;&#x770B;&#x4E2D;&#x7684;&#x5B83;&#x662F;generate&#x8FD9;&#x4E2A;&#x529F;&#x80FD;&#xFF0C;&#x53EF;&#x4EE5;&#x8BA9;&#x6211;&#x66F4;&#x719F;&#x6089;&#x7F51;&#x8DEF;&#x548C;&#x5B66;&#x4E60;&#x5230;&#x5F88;&#x591A;&#x534F;&#x8BAE;&#xFF0C;&#x7279;&#x522B;&#x662F;&#x4E8C;&#x8FDB;&#x5236;&#x534F;&#x8BAE;&#xFF0C;&#x5B83;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x79CD;*.src&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x80FD;&#x591F;&#x7528;&#x63D0;&#x4F9B;&#x7684;&#x5DE5;&#x5177;protogen&#x751F;&#x6210;&#x90E8;&#x5206;&#x4EE3;&#x7801;&#xFF0C;&#x6709;&#x70B9;&#x8C61;&lt;a href="https://code.google.com/p/protobuf/" title="google protobuf"&gt;protobuf&lt;/a&gt;&#x3002;&lt;/p&gt;
+
+&lt;h3 id="toc_1"&gt;&#x5410;&#x69FD;&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://code.google.com/p/libcrafter/" title="libcrafter official site"&gt;&#x5B98;&#x65B9;&#x7F51;&#x7AD9;&lt;/a&gt;&#x6709;&#x7B80;&#x4ECB;&#x548C;wiki&#x5C31;&#x4E0D;&#x591A;&#x8BF4;&#x600E;&#x4E48;&#x7528;&#x5B83;&#x4E86;&#xFF0C;&#x60F3;&#x7528;&#x7684;&#x4EBA;&#x81EA;&#x7136;&#x4F1A;&#x53BB;&#x770B;&#x3002;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&#x4EE3;&#x7801;&#x592A;&#x89C4;&#x8303;&#x4E86;&#xFF0C;&#x6BCF;&#x4E2A;&#x501F;&#x53E3;&#x90FD;&#x6709;&#x6CE8;&#x91CA;&#xFF08;&#x8BA9;&#x6211;&#x8F88;&#x65E0;&#x6CE8;&#x91CA;&#x515A;&#x60C5;&#x4F55;&#x4EE5;&#x582A;&#xFF09;&#xFF0C;&#x4F46;&#x662F;&#x7528;&#x4E86;&#x5F02;&#x5E38;&#xFF0C;&#x4E0D;&#x5927;&#x597D;&#x3002;
+&#x6211;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#x5E94;&#x4E3A;&#x6CA1;&#x6709;root&#x6743;&#x9650;&#x5C31;&#x62A5;&#x5F02;&#x5E38;&#x4E86;...&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&#x539F;&#x7248;&#x4E0D;&#x652F;&#x6301;OS X&#xFF0C;&#x4E0D;&#x8FC7;&#x8FD8;&#x597D;&#xFF0C;&lt;a href="https://github.com/gdetal/libcrafter"&gt;&#x6709;&#x4E00;&#x4E2A;fork&lt;/a&gt;&#x652F;&#x6301;OS X&#xFF0C;&#x6211;&#x4E5F;&lt;a href="https://github.com/henglinli/libcrafter"&gt;fork&#x4E86;&#x4E00;&#x652F;&lt;/a&gt;&#xFF0C;&#x8FD8;&#x6DFB;&#x52A0;&#x4E86;cmake&#x652F;&#x6301;&#xFF0C;&#x4E0D;&#x559C;&#x6B22;&#x8001;&#x5F0F;&#x7684;automake&#x7CFB;&#x5217;&#x3002;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&#x672C;&#x6765;&#x6253;&#x7B97;&#x81EA;&#x5DF1;fork OS X&#x652F;&#x6301;&#x7684;&#xFF0C;&#x4F5C;&#x8005;&#x5728;issues&#x91CC;&#x8BF4;&#x4E86;&#xFF08;&#x73B0;&#x5728;&#x90A3;&#x4E2A;issue&#x4E0D;&#x518D;&#x4E86;&#xFF09;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x4FEE;&#x6539;RawSocke&#x7684;&#x521B;&#x5EFA;&#xFF0C;&#x5E94;&#x4E3A;&#x5176;&#x4ED6;&#x7684;&#x90FD;&#x662F;&#x5B83;&#x81EA;&#x5DF1;&#x5B9E;&#x73B0;&#x7684;&#xFF08;&#x56E7;&#xFF0C;&#x5389;&#x5BB3;&#x554A;&#xFF09;&#x3002;&#x6211;&#x662F;&#x8FD9;&#x6837;&#x521B;&#x5EFA;&#x94FE;&#x8DEF;&#x5C42;socket(link socket)&#x7684;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int link_socket = socket(AF_LINK, SOCK_RAW, DLT_RAW)
+// OS X&#x7684;AF_LINK&#x5E94;&#x8BE5;&#x7B49;&#x4EF7;&#x4E0E;PF_PACKET&#xFF0C;DLT_RAW&#x662F;bpf&#x91CC;&#x5B9A;&#x4E49;&#x7684;raw IP
+// &#x8FD9;&#x4E2A;&#x80FD;&#x7F16;&#x8BD1;&#x901A;&#x8FC7;&#xFF0C;&#x540E;&#x9762;bind&#x65F6;&#x5019;&#x7684;struct sockaddr_ll&#x8BA9;&#x6211;&#x653E;&#x5F03;&#x4E86;&#xFF0C;&#x5B83;&#x662F;linux&#x7279;&#x6709;&#x7684;...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href="https://github.com/gdetal/libcrafter"&gt;gedtal&lt;/a&gt;&#x7684;&#x662F;&#x8FD9;&#x6837;&#x5B9E;&#x73B0;&#x7684;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int link_socket = open(&amp;quot;/dev/bpf0&amp;quot;, O_WRONLY);
+//&#x5728;OS X&#x6216;&#x8005;FreeBSD&#x4E2D;&#x6253;&#x5F00;bpf&#x5C31;&#x662F;&#x521B;&#x5EFA;link socket&#xFF0C;&#x5B66;&#x4E60;&#x4E86;&#x3002;&#x3002;&#x3002;
+//bind &#x7528;ioctl
+struct ifreq ifr;
+ioctl(link_socket, BIOCSETIF, (char *)&amp;amp;ifr);
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&#x5176;&#x4ED6;&#x3002;&#x5176;&#x4EE3;&#x7801;&#x503C;&#x5F97;&#x4E00;&#x7779;&#x3002;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr&gt;
+</description>
+    </item>
     <item>
       <title>&#x4F7F;&#x7528;Ruhoh&#x548C;Github&#x642D;&#x5EFA;&#x535A;&#x5BA2;</title>
       <link>https://henglinli.github.io/tutorial/%E4%BD%BF%E7%94%A8ruhoh%E5%92%8Cgithub%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2</link>
@@ -27,7 +63,7 @@
 
 &lt;pre&gt;&lt;code&gt;$ git clone &amp;#39;git://github.com/ruhoh/blog.git&amp;#39; &amp;#39;blog&amp;#39; #&#x83B7;&#x53D6;&#x4EE3;&#x7801;
 $ cd blog 
-$ bundle install #&#x5B89;&#x88C5;&#x4EE5;&#x6765;&#xFF0C;&#x4F1A;&#x5B89;&#x88C5;ruhoh&#xFF0C;&#x5EFA;&#x8BAE;&#x6539;&#x6210;&#x6DD8;&#x5B9D;&#x7684;&#x6E90;
+$ bundle install #&#x5B89;&#x88C5;&#x4F9D;&#x8D56;&#xFF0C;&#x4F1A;&#x5B89;&#x88C5;ruhoh&#xFF0C;&#x5EFA;&#x8BAE;&#x6539;&#x6210;&#x6DD8;&#x5B9D;&#x7684;&#x6E90;
 # Gemfile&#x6539;&#x6210; source &amp;#39;http://ruby.taobao.org/&amp;#39;
 $ bundle exec rackup -p 9292 #&#x672C;&#x5730;&#x9884;&#x89C8;
 &lt;/code&gt;&lt;/pre&gt;
