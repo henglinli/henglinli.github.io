@@ -3,7 +3,66 @@
   <channel>
     <title>henglinli.github.io</title>
     <link>https://henglinli.github.io</link>
-    <pubDate>2013-08-15 10:59:16 +0800</pubDate>
+    <pubDate>2013-08-21 19:07:09 +0800</pubDate>
+    <item>
+      <title>Try OS X static link</title>
+      <link>https://henglinli.github.io/try-os-x-static-link</link>
+      <pubDate>2013-08-21</pubDate>
+      <description>&lt;h3 id="toc_0"&gt;&#x5F00;&#x59CB;&lt;/h3&gt;
+
+&lt;p&gt;&#x7531;&#x4E8E;clang&#x9ED8;&#x8BA4;&#x7684;c++&#x6807;&#x51C6;&#x5E93;&#x8FD8;&#x662F;libstdc++,&#x6211;&#x5C31;&#x60F3;&#x88C5;gcc-4.8,&#x9664;&#x4E86;&#x7F51;&#x7EDC;&#x95EE;&#x9898;&#x5916;&#x8FD8;&#x7B97;&#x987A;&#x5229;&#xFF1A;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;brew tap homebrew/versions
+brew install gcc48
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&#x5149;&#x662F;&#x7F16;&#x8BD1;gcc&#x5C3D;&#x7136;&#x8017;&#x65F6;47&#x5206;&#x949F;&#xFF01;&#x5B89;&#x88C5;&#x4E4B;&#x540E;&#x6D4B;&#x8BD5;&#x4E0B;&#xFF1A;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int main() { return 0; } // empty.cc
+gcc-4.8 empty.cc // OK
+gcc-4.8 empty.cc -static // ld: library not found for -lcrt0.o
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&#x627E;&#x4E0D;&#x5230;crt0.o, &#x90A3;&#x5C3C;&#xFF1F;&lt;/p&gt;
+
+&lt;h3 id="toc_1"&gt;&#x7EE7;&#x7EED;&lt;/h3&gt;
+
+&lt;p&gt;&#x5728;/usr/lib/&#x548C;Xcode&#x7684;SDK&#x4E2D;&#x90FD;&#x6CA1;&#x6709;&#x627E;&#x5230;&#x5B83;&#xFF0C;&#x4E8E;&#x662F;google&#x4E86;&#x4E00;&#x4E0B;&#x53D1;&#x73B0;&#x4E86;&lt;a href="https://developer.apple.com/library/mac/qa/qa1118/_index.html" title="qa crt0.o"&gt;Apple&#x7684;Technical Q&amp;amp;A QA1118&lt;/a&gt;,&#x5B83;&#x8FD8;&#x8BF4;&#x6559;&#x4E86;&#x4E00;&#x756A;&#xFF0C;&#x7136;&#x540E;&#x8BF4;&#x4E0D;&#x652F;&#x6301;&#x9759;&#x6001;&#x94FE;&#x63A5;(Apple does not support statically linked binaries on Mac OS X.), &#x4F46;&#x662F;&#x5B83;&#x7ED9;&#x51FA;&#x4E86;&#x65B9;&#x5411;&#xFF0C;&#x8BA9;&#x6211;&#x4EEC;&#x81EA;&#x5DF1;&#x7F16;&#x8BD1;&lt;em&gt;Csu (C starup)&lt;/em&gt;&#x3002;&#x4E0B;&#x8F7D; &lt;a href="http://www.opensource.apple.com/tarballs/Csu/Csu-79.tar.gz"&gt;http://www.opensource.apple.com/tarballs/Csu/Csu-79.tar.gz&lt;/a&gt; &#x5E76;&#x4E14;&#x7F16;&#x8BD1;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd Csu-79
+make // &#x7F16;&#x8BD1;
+cp crt0.o /usr/local/lib //&#x62F7;&#x8D1D;&#x5230;local
+...
+gcc-4.8 empty.cc -static
+//undefined symbols for architecture x86_64:
+//  &amp;quot;_exit&amp;quot;, referenced from:
+//     start in crt0.o
+//&#x73B0;&#x5728;&#x53EA;&#x5DEE;&#x4E00;&#x4E2A;_exit&#x4E86;&#x6CA1;&#x6CD5;&#x94FE;&#x63A5;&#x4E86;&#x3002;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="toc_2"&gt;&#x7EE7;&#x7EED;&lt;/h3&gt;
+
+&lt;p&gt;man&#x4E86;&#x4E00;&#x4E0B;&lt;em&gt;exit&#x53D1;&#x73B0;&#x4ED6;&#x662F;&#x5728;unistd.h&#x4E2D;&#x7684;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x5B83;&#x5728;C&#x5E93;&#x4E2D;&#xFF0C;&#x987A;&#x5E26;&#x63D0;&#x4E00;&#x4E0B;OS X&#x7684;C&#x5E93;&#x5305;&#x542B;&#x5728;System&#x5E93;&#x4E2D;&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x5C31;&#x51B3;&#x5B9A;&#x81EA;&#x5DF1;&#x7F16;&#x8BD1;libC&#x3002;&#x4E0B;&#x8F7D; &lt;a href="http://www.opensource.apple.com/tarballs/Libc/Libc-825.26.tar.gz"&gt;http://www.opensource.apple.com/tarballs/Libc/Libc-825.26.tar.gz&lt;/a&gt; &#x5E76;&#x4E14;&#x7F16;&#x8BD1;&#x3002;&#x5B83;&#x63D0;&#x4F9B;&#x4E86;Xcode&#x7684;project&#xFF0C;&#x672C;&#x4EE5;&#x4E3A;&#x4F1A;&#x975E;&#x5E38;&#x987A;&#x5229;&#xFF0C;&#x7ED3;&#x679C;&#x5C31;&#x662F;&#x8FD9;&#x4E2A;libC&#x641E;&#x4E86;&#x6211;&#x534A;&#x5929;&#xFF0C;&#x4E3B;&#x8981;&#x7684;&#x95EE;&#x9898;&#x5728;&#x4E8E;libC&#x9700;&#x8981;System Framwork &#x7684; PrivateHeaders&#xFF0C;&#x4F46;&#x662F;SDK&#x548C;&#x7CFB;&#x7EDF;&#x90FD;&#x4E0D;&#x63D0;&#x4F9B;&#xFF0C;&#x6211;&#x4E8E;&#x662F;&#x8FD8;&#x5F97;&#x4ECE;xnu&#x7684;&#x6E90;&#x4EE3;&#x7801;&#x4E2D;&#x63D0;&#x53D6;&#x4E86;&#x51E0;&#x4E2A;&#x9700;&#x8981;&#x7684;&#x5934;&#x6587;&#x4EF6;&#xFF0C;&#x8FD8;&#x5F97;&#x5C0F;&#x5C0F;&#x4FEE;&#x6539;&#x6E90;&#x4EE3;&#x7801;&#xFF08;&#x4E3B;&#x8981;&#x662F;&#x4E00;&#x4E0B;&#x5B8F;&#xFF09;&#xFF0C;&#x6700;&#x540E;&#x7EC8;&#x4E8E;&#x5F97;&#x5230;&#x4E86;libc.a&#x548C;libc&lt;/em&gt;debug.a&#xFF0C;&#x8BD5;&#x8BD5;&#x770B;&#xFF1A;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gcc-4.8 empty.cc -static /usr/local/lib/libc.a
+//Undefined symbols for architecture x86_64:
+//&amp;quot;__Block_copy&amp;quot;, referenced from:
+//_atexit_b in libc.a(atexit.o)
+//&amp;quot;___assert_rtn&amp;quot;, referenced from:
+//_pthread_create in libc.a(pthread.o)
+//_pthread_create_suspended_np in libc.a(pthread.o)
+//...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&#x94FE;&#x63A5;&#x9519;&#x8BEF;&#x8FD8;&#x6709;&#x5F88;&#x591A;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x548C;pthread&#x7684;&#x94FE;&#x63A5;&#x4F9D;&#x8D56;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;libSystem&#x7684;&#x5176;&#x4ED6;&#x90E8;&#x5206;&#x4E5F;&#x5F97;&#x7F16;&#x8BD1;&#x51FA;&#x6765;&#xFF0C;&#x8981;&#x4FEE;&#x6539;&#x7684;&#x592A;&#x591A;&#x4E86;&#xFF0C;&#x800C;&#x4E14;&#x6211;&#x7F16;&#x8BD1;libc&#x7684;&#x65F6;&#x5019;&#x8FD8;&#x53BB;&#x6389;&#x4E86;&#x4E00;&#x4E2A;dispatch&#x76F8;&#x5173;&#x7684;&#x5934;&#x6587;&#x4EF6;&#x3002;&lt;/p&gt;
+
+&lt;h3 id="toc_3"&gt;&#x653E;&#x5F03;&lt;/h3&gt;
+
+&lt;p&gt;&#x5982;&#x679C;&#x7EE7;&#x7EED;&#x4E0B;&#x53BB;&#xFF0C;&#x4FEE;&#x6539;&#x4E0B;libC&#x7684;project&#xFF08;&#x5B83;&#x9ED8;&#x8BA4;&#x7F16;&#x8BD1;&#x51FA;libSystem.dylib)&#xFF0C;&#x4F46;&#x662F;&#x4E5F;&#x4E0D;&#x80FD;&#x4FDD;&#x8BC1;&#x5B83;&#x8FD0;&#x884C;&#x7A33;&#x5B9A;&#x554A;&#xFF0C;&#x4E8E;&#x662F;&#x5F97;&#x51FA;&#x7ED3;&#x8BBA;&#xFF1A;OS X&#x4E0D;&#x652F;&#x6301;&#x52A8;&#x6001;&#x94FE;&#x63A5;&#xFF01;&lt;/p&gt;
+
+&lt;hr&gt;
+</description>
+    </item>
     <item>
       <title>&#x5B66;&#x4E60;libcrafter</title>
       <link>https://henglinli.github.io/tutorial/%E5%AD%A6%E4%B9%A0libcrafter</link>
