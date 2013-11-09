@@ -61,6 +61,37 @@
 <div class="row-fluid">
   <div class="span12">
     <div class="post">
+  <h3 class="title"><a href="/try/try-tcmalloc">try tcmalloc</a> <span class="date">2013-11-07</span></h3>
+
+  <div class="summary ellipsis">
+<h3 id="toc_0">Why</h3>
+
+<p><a href="https://code.google.com/p/gperftools/" title="gperftools">TCMalloc</a>&#24456;&#26089;&#23601;&#29609;&#36807;&#20102;&#65292;&#26368;&#36817;&#38754;&#35797;&#65292;&#35752;&#35770;&#21040;&#20851;&#20110;&#31243;&#24207;&#20248;&#21270;&#30340;&#38382;&#39064;&#65292;
+&#24403;&#26102;&#34987;&#36924;&#38382;&#31639;&#27861;&#21644;&#25968;&#25454;&#32467;&#26500;&#65292;&#25105;&#30340;&#22238;&#31572;&#26159;&#65306;&#29992;&#24120;&#29992;&#30340;&#23601;&#34892;&#65292;&#32534;&#35793;&#22120;&#20250;&#33258;&#21160;&#20248;&#21270;&#30340;&#65292;
+&#26368;&#20027;&#35201;&#30340;&#26159;&#20943;&#23569;&#31995;&#32479;&#35843;&#29992;&#12290;&#29616;&#22312;&#24819;&#26469;&#65292;&#26368;&#26089;&#24212;&#35813;&#32771;&#34385;&#30340;&#26159;&#20248;&#21270;&#20869;&#23384;&#20351;&#29992;&#65292;
+&#21363;&#26367;&#25442;&#31995;&#32479;&#40664;&#35748;&#30340;&#20869;&#23384;&#20998;&#37197;&#22120;&#25110;&#20351;&#29992;&#20869;&#23384;&#27744;&mdash;&mdash;
+&#20351;&#29992;<a href="https://code.google.com/p/gperftools/" title="gperftools">TCMlloc</a>&#25110;<a href="www.boost.org/libs/pool/%E2%80%8E" title="boost pool">Boost.Pool</a>&#12290;</p>
+
+<h3 id="toc_1">How</h3>
+
+<p>&#19968;&#24320;&#22987;&#21482;&#30693;&#36947;<a href="https://code.google.com/p/gperftools/" title="gperftools">TCMalloc</a>&#25226;&#20869;&#23384;&#20998;&#37197;&#30340;&#20107;&#24773;&#32454;&#21270;&#20102;&#65306;
+&#23567;&#30340;&#20869;&#23384;&#20998;&#37197;&#29992;&#32447;&#31243;&#26412;&#22320;h&#32531;&#23384;(thread-local cache);
+&#22823;&#30340;&#20869;&#23384;&#20998;&#37197;&#29992;&#20027;&#32531;&#23384;&#22534;(central headp)&#20998;&#37197;;
+&#20998;&#37197;&#30340;&#20869;&#23384;&#21487;&#22312;&#20004;&#32773;&#30452;&#25509;&#36716;&#31227;&#12290;&#29616;&#22312;&#25165;&#30693;&#36947;&#30340;&#26159;&#23427;&#26159;&#24590;&#20040;&#26367;&#20195;&#31995;&#32479;
+&#33258;&#24102;&#30340;&#20998;&#37197;&#22120;&#30340;&#65306;</p>
+
+<p>1, GNU/Linux with glibc 
+&#35828;&#26469;&#24813;&#24871;&#65292;&#19968;&#24320;&#22987;&#25105;&#20197;&#20026;<a href="http://www.gnu.org/software/libc/manual/html_node/Hooks-for-Malloc.html" title="tls">malloc hook</a>&#23601;&#26159;&#26469;&#24178;&#36825;&#20107;&#30340;&#65292;
+&#20180;&#32454;&#30475;&#20102;&#25991;&#26723;&#21457;&#29616;<a href="http://www.gnu.org/software/libc/manual/html_node/Hooks-for-Malloc.html" title="tls">&#23427;</a>&#26159;&#29992;&#26469;debug&#30340;&#12290;
+&#30475;&#20102;<a href="https://code.google.com/p/gperftools/source/browse/src/libc_override_gcc_and_weak.h" title="glibc override">tcmalloc&#30340;&#30456;&#20851;&#20195;&#30721;</a>&#21457;&#29616;&#29992;&#30340;&#26159;<a href="http://en.wikipedia.org/wiki/Weak_symbol" title="weak symbol">Weak Symbol</a>alias&#12290;</p>
+
+</div>
+
+  <div class="more">
+    <a href="/try/try-tcmalloc" class="btn btn-small">read more..</a>
+  </div>
+</div>
+<div class="post">
   <h3 class="title"><a href="/try/try-os-x-static-link">Try OS X static link</a> <span class="date">2013-08-21</span></h3>
 
   <div class="summary ellipsis">
@@ -256,6 +287,7 @@ $ ruhoh tutorial new "ruhoh how to"
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-42955283-1']);
   _gaq.push(['_trackPageview']);
+  
 
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
