@@ -61,6 +61,86 @@
 <div class="row-fluid">
   <div class="span12">
     <div class="post">
+  <h3 class="title"><a href="/tutorial/botan-srp-%E4%BD%BF%E7%94%A8%E4%BE%8B%E5%AD%90">Botan SRP 使用例子</a> <span class="date">2013-11-21</span></h3>
+
+  <div class="summary ellipsis">
+<h3 id="toc_0">&#20026;&#31070;&#39532;Botan SRP&#65311;</h3>
+
+<ul>
+<li>
+<a href="http://botan.randombit.net/" title="botan home">Botan</a> is a crypto library for C++ released under the permissive <a href="http://botan.randombit.net/license.html" title="botan license">BSD-2 (or FreeBSD) license</a>. C++&#21644;BSD&#31995;&#21015;&#30340;license&#23601;&#26159;&#26368;&#22909;&#30340;&#29702;&#30001;&#65292;&#23427;&#29992;&#20102;&#24322;&#24120;&#65292;&#25105;&#34920;&#31034;&#38750;&#24120;&#36951;&#25022;&#12290;</li>
+<li>
+<a href="http://en.wikipedia.org/wiki/Secure_Remote_Password_protocol" title="srp wiki">SRP(Secure Remote Password protocol)</a>&#19968;&#30475;&#21517;&#23383;&#23601;&#30693;&#36947;&#65292;
+&#23427;&#27604;&#26381;&#21153;&#31471;&#20445;&#23384;hash&#23494;&#30721;&#23433;&#20840;&#22810;&#20102;&#12290;</li>
+</ul>
+
+<h3 id="toc_1">&#35299;&#37322;</h3>
+
+<ul>
+<li><p><a href="http://botan.randombit.net/" title="botan home">Botan</a>&#30340;SRP&#23454;&#29616;&#26159;<a href="http://tools.ietf.org/html/rfc5054" title="RFC 5054">RFC 5054</a>SRP-TLS&#65292;&#23427;&#21644;<a href="http://tools.ietf.org/html/rfc2945" title="RFC 2945">RFC 2945</a>(<a href="http://www.cnpaf.net/rfc/rfc2945.txt" title="RFC 2945 &#20013;&#25991;">&#20013;&#25991;</a>)&#19981;&#22826;&#19968;&#26679;&#12290;</p></li>
+<li><p><a href="http://botan.randombit.net/" title="botan home">Botan</a>&#30340;SRP&#32473;&#20010;3&#20010;&#20989;&#25968;&#19968;&#20010;&#31867;&#65288;2&#20010;&#20989;&#25968;&#65289;&#20849;5&#20010;&#25509;&#21475;&#12290;</p></li>
+<li>
+<p>&#23458;&#25143;&#31471;&#20989;&#25968;</p>
+
+<pre><code>// &#39564;&#35777;&#26381;&#21153;&#22120;&#31471;&#21457;&#36865;&#26469;&#30340;B&#65292;&#24182;&#36820;&#22238;&#23458;&#25143;&#31471;key
+std::pair&lt;BigInt,SymmetricKey&gt; // &#36820;&#22238; A &#21644; client key
+BOTAN_DLL srp6_client_agree(
+  const std::string&amp; username, // &#29992;&#25143;&#21517;
+  std::string&amp; password, // &#23494;&#30721;&#65292;&#19981;&#20250;&#36890;&#36807;&#32593;&#32476;&#20256;&#36755;
+  const std::string&amp; group_id, // &#26684;&#24335;&#20026;"modp/srp/1024", 1024&#34920;&#31034;1024&#20301;&#25968;
+  const std::string&amp; hash_id, // &#26684;&#24335;&#20026;"MD-5" "SHA-160"&#31561;
+  const std::vector&lt;byte&gt;&amp; salt, // &#26368;&#23569;128&#20301;&#65292;&#30001;&#26381;&#21153;&#22120;&#31471;&#24471;&#21040;
+  const BigInt&amp; B, // &#26381;&#21153;&#22120;&#31471;&#36820;&#22238;&#30340;B
+  RandomNumberGenerator&amp; rng); // &#21487;&#29992;Botan::AutoSeeded_RNG
+</code></pre>
+</li>
+<li>
+<p>&#26381;&#21153;&#22120;&#31471;&#20989;&#25968;</p>
+
+<pre><code>// &#27880;&#20876;&#29992;&#65292;&#29983;&#25104;&lt;username, verifier, salt&gt;&#19977;&#20803;&#32452;&#20013;&#30340;verifier,
+// &#38656;&#25345;&#20037;&#21270;&#35813;&#19977;&#20803;&#32452;
+BigInt 
+generate_srp6_verifier(
+  const std::string&amp; identifier, // &#29992;&#25143;&#21517;
+  const std::string&amp; password, // &#23494;&#30721;&#65292;&#25110;&#23494;&#30721;hash
+  const std::vector&lt;byte&gt;&amp; salt, // &#38543;&#26426;&#29983;&#25104;&#65292;&#26368;&#23569;128&#20301;
+  const std::string&amp; group_id, // &#24517;&#39035;&#21644;&#23458;&#25143;&#31471;&#19968;&#33268;
+  const std::string&amp; hash_id); // &#24517;&#39035;&#21644;&#23458;&#25143;&#31471;&#19968;&#33268;
+</code></pre>
+</li>
+<li>
+<p>&#26381;&#21153;&#22120;&#31471;&#31867;</p>
+
+<pre><code>class SRP6_Server_Session
+{
+public:
+// &#29983;&#25104; B
+BigInt // &#36820;&#22238;B&#65292;B&#35201;&#20256;&#36865;&#32473;&#23458;&#25143;&#31471;
+step1(const BigInt&amp; v, // &#25345;&#20037;&#21270;&#19977;&#20803;&#32452;&#20013;&#30340;verifier
+      const std::string&amp; group_id, // &#24517;&#39035;&#21644;&#23458;&#25143;&#31471;&#19968;&#33268;
+      const std::string&amp; hash_id, // &#24517;&#39035;&#21644;&#23458;&#25143;&#31471;&#19968;&#33268;
+      RandomNumberGenerator&amp; rng); // &#24517;&#39035;&#21644;&#23458;&#25143;&#31471;&#19968;&#33268;
+
+// &#36820;&#22238;&#26381;&#21153;&#22120;key
+SymmetricKey step2(const BigInt&amp; A); // &#23458;&#25143;&#31471;&#20256;&#36865;&#26469;&#30340;A
+};
+</code></pre>
+</li>
+<li>
+<p>helper&#20989;&#25968;</p>
+
+<pre><code>// &#26242;&#26102;&#27809;&#29992;&#21040;
+std::string srp6_group_identifier(const BigInt&amp; N, const BigInt&amp; g);
+</code></pre>
+</li>
+</ul>
+</div>
+
+  <div class="more">
+    <a href="/tutorial/botan-srp-%E4%BD%BF%E7%94%A8%E4%BE%8B%E5%AD%90" class="btn btn-small">read more..</a>
+  </div>
+</div>
+<div class="post">
   <h3 class="title"><a href="/try/try-tcmalloc">try tcmalloc</a> <span class="date">2013-11-07</span></h3>
 
   <div class="summary ellipsis">
