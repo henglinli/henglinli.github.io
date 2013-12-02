@@ -4,7 +4,13 @@
     <title>henglinli.github.io</title>
     <description>henglinli.github.io</description>
     <link>https://henglinli.github.io</link>
-    <pubDate>2013-11-22</pubDate>
+    <pubDate>2013-12-02</pubDate>
+    <item>
+      <title>Boost.Asio &#x8FDE;&#x63A5;&#x6C60;&#x7684;&#x8BBE;&#x8BA1;</title>
+      <link>https://henglinli.github.io/study/boost-asio-%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E8%AE%BE%E8%AE%A1</link>
+      <pubDate>2013-12-02</pubDate>
+      <description>&#x5173;&#x4E8E;&#x8FDE;&#x63A5;&#x6C60;&#x7684;&#x8BBE;&#x8BA1;</description>
+    </item>
     <item>
       <title>Botan SRP &#x4F7F;&#x7528;&#x4F8B;&#x5B50;</title>
       <link>https://henglinli.github.io/tutorial/botan-srp-%E4%BD%BF%E7%94%A8%E4%BE%8B%E5%AD%90</link>
@@ -163,12 +169,6 @@ gcc-4.8 empty.cc -static
       <link>https://henglinli.github.io/tutorial/%E5%AD%A6%E4%B9%A0libcrafter</link>
       <pubDate>2013-08-15</pubDate>
       <description>libcrafter&#x5B66;&#x4E60;&#x7B14;&#x8BB0;</description>
-    </item>
-    <item>
-      <title>&#x4F7F;&#x7528;Ruhoh&#x548C;Github&#x642D;&#x5EFA;&#x535A;&#x5BA2;</title>
-      <link>https://henglinli.github.io/tutorial/%E4%BD%BF%E7%94%A8ruhoh%E5%92%8Cgithub%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2</link>
-      <pubDate>2013-08-05</pubDate>
-      <description>&#x4F7F;&#x7528;Ruhoh&#x751F;&#x6210;&#x9759;&#x6001;&#x7F51;&#x9875;&#xFF0C;&#x5E76;&#x90E8;&#x7F72;&#x5230;Github Pages</description>
     </item>
   </channel>
 </rss>
