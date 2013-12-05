@@ -4,7 +4,48 @@
     <title>henglinli.github.io</title>
     <description>henglinli.github.io</description>
     <link>https://henglinli.github.io</link>
-    <pubDate>2013-12-02</pubDate>
+    <pubDate>2013-12-05</pubDate>
+    <item>
+      <title>try Concurrency Kit and TBB</title>
+      <link>https://henglinli.github.io/try/try-concurrency-kit-and-tbb</link>
+      <pubDate>2013-12-05</pubDate>
+      <description>&lt;h3 id="toc_0"&gt;Why&lt;/h3&gt;
+
+&lt;p&gt;Server&#x7AEF;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x5168;&#x5C40;&#x5BB9;&#x5668;&#xFF0C;&#x6765;&#x5B58;&#x653E;&#x5168;&#x90E8;Client&#x7684;&#x5F53;&#x524D;&#x72B6;&#x6001;&#xFF0C;&#x4EE5;&#x4FBF;&#x80FD;&#x505A;&#x5230;C2C&#x4EA4;&#x4E92;&#xFF1B;
+&#x4E5F;&#x9700;&#x8981;&#x591A;&#x4E2A;&#x5168;&#x5C40;&#x5BB9;&#x5668;&#x6765;&#x4FDD;&#x6301;Server&#x7684;&#x72B6;&#x6001;&#x4FE1;&#x606F;&#xFF0C;&#x4EE5;&#x4FBF;&#x80FD;&#x505A;&#x5230;C2S&#x4EA4;&#x4E92;&#x3002;&#x591A;&#x7EBF;&#x7A0B;&#x4E0B;&#xFF0C;
+&#x4F7F;&#x7528;&#x5E38;&#x89C4;&#x5BB9;&#x5668;(unorderd_map&#x7B49;)&#x5F97;&#x4E0A;&#x9501;&#xFF0C;&#x8FD9;&#x6837;Server&#x5C31;&#x6162;&#x4E0B;&#x6765;&#x4E86;&#x3002;&lt;/p&gt;
+
+&lt;h2 id="toc_1"&gt;How&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href="http://concurrencykit.org/" title="Concurrency Kit"&gt;Concurrency Kit&lt;/a&gt;&#x63D0;&#x4F9B;&#x591A;&#x79CD;&#x65E0;&#x9501;(lockfree)&#x5BB9;&#x5668;&#xFF0C;
+&lt;a href="http://threadingbuildingblocks.org" title="Intel&#xAE; Threading Building Blocks (Intel&#xAE; TBB)"&gt;Intel&#xAE; Threading Building Blocks (Intel&#xAE; TBB)&lt;/a&gt;&#x4E5F;&#x63D0;&#x4F9B;&#x5E76;&#x53D1;&#x7684;&#x5BB9;&#x5668;&#xFF0C;
+&lt;a href="http://threadingbuildingblocks.org" title="Intel&#xAE; Threading Building Blocks (Intel&#xAE; TBB)"&gt;Intel&#xAE; TBB&lt;/a&gt;&#x7684;&#x5E76;&#x53D1;&#x5BB9;&#x5668;&#x4E5F;&#x4E0D;&#x662F;&#x65E0;&#x9501;&#x5BB9;&#x5668;&#xFF0C;&#x7406;&#x8BBA;&#x4E0A;&#x8981;&#x6BD4;&lt;a href="http://concurrencykit.org/" title="Concurrency Kit"&gt;Concurrency Kit&lt;/a&gt;&#x6162;&#x3002;
+&#x91C7;&#x7528;&#x4EE5;&#x4E0B;&#x4E09;&#x79CD;hash map:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    // &#x5E26;&#x4E00;&#x4E2A;std::mutex&#x9501;&#x7684;std::unorderd_map
+    class MutexHashMap {
+        std::unorderd_map&amp;lt;int, void*&amp;gt; hash_map_;
+        std::mutex mutex_;
+    }; 
+    // (Intel&#xAE; TBB)&#x7684;&#x5E76;&#x53D1;hash map
+    using TBBHashMap = tbb::interface5::concurrent_hash_map&amp;lt;int, void*&amp;gt;;
+    // Concurrency Kit&#x7684;&#x65E0;&#x9501;hash map
+    struct ck_ht_t hash_table_;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&#x786C;&#x4EF6;&#x91C7;&#x7528;Core2&#x53CC;&#x6838;2.4G CPU&#xFF0C;&#x7CFB;&#x7EDF;&#x91C7;&#x7528; OS X 10.9&#xFF0C;
+key-value&#x5BF9;&#x91C7;&#x7528;&lt;code&gt;std::pair&amp;lt;int,void*&amp;gt;&lt;/code&gt;&#xFF0C;
+&#x4E24;&#x4E2A;&#x7EBF;&#x7A0B;&#x5E76;&#x53D1;&#x5199;4&#x4E07;&#x4E2A;key-value&#x5BF9;&#xFF0C;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x67E5;&#x627E;4&#x4E07;&#x6B21;key&#xFF0C;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x5220;&#x9664;4&#x4E07;&#x4E2A;key-value&#x5BF9;&#xFF0C;
+&#x4E09;&#x79CD;&#x5BB9;&#x5668;&#x5206;&#x522B;&#x8017;&#x65F6;&lt;code&gt;671 milliseconds&lt;/code&gt;&#x3001;&lt;code&gt;58 milliseconds&lt;/code&gt;&#x548C;&lt;code&gt;16 milliseconds&lt;/code&gt;&#x3002;
+&#x663E;&#x7136;&lt;a href="http://concurrencykit.org/" title="Concurrency Kit"&gt;Concurrency Kit&lt;/a&gt;&#x8981;&#x5FEB;&#x5F88;&#x591A;&#xFF0C;&#x81EA;&#x5DF1;&#x5199;&#x7684;&#x5E26;&#x9501;&#x7684;&lt;code&gt;std::unorderd_map&lt;/code&gt;&#x6162;&#x592A;&#x591A;&#x4E86;&#x3002;&lt;/p&gt;
+
+&lt;h2 id="toc_2"&gt;End&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href="https://github.com/henglinli/TheServer/blob/master/TheServer/concurrent_hash_map.hh" title="concurrent hash map"&gt;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&lt;/a&gt;&#x89C1;&#x6211;&#x7684;&lt;a href="https://github.com/henglinli/TheServer" title="the server"&gt;Github/TheServer&lt;/a&gt;&#x3002;&lt;/p&gt;
+
+&lt;hr&gt;
+</description>
+    </item>
     <item>
       <title>Boost.Asio &#x8FDE;&#x63A5;&#x6C60;&#x7684;&#x8BBE;&#x8BA1;</title>
       <link>https://henglinli.github.io/study/boost-asio-%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E8%AE%BE%E8%AE%A1</link>
@@ -163,12 +204,6 @@ gcc-4.8 empty.cc -static
 
 &lt;hr&gt;
 </description>
-    </item>
-    <item>
-      <title>&#x5B66;&#x4E60;libcrafter</title>
-      <link>https://henglinli.github.io/tutorial/%E5%AD%A6%E4%B9%A0libcrafter</link>
-      <pubDate>2013-08-15</pubDate>
-      <description>libcrafter&#x5B66;&#x4E60;&#x7B14;&#x8BB0;</description>
     </item>
   </channel>
 </rss>
