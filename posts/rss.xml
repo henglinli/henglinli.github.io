@@ -4,7 +4,106 @@
     <title>henglinli.github.io</title>
     <description>henglinli.github.io</description>
     <link>https://henglinli.github.io</link>
-    <pubDate>2013-12-05</pubDate>
+    <pubDate>2013-12-12</pubDate>
+    <item>
+      <title>try translate queue(3) to cpp</title>
+      <link>https://henglinli.github.io/try/try-translate-queue-3-to-cpp</link>
+      <pubDate>2013-12-12</pubDate>
+      <description>&lt;h3 id="toc_0"&gt;Motivation&lt;/h3&gt;
+
+&lt;p&gt;[queue(3)][queue]&#x5F88;&#x65E9;&#x5C31;&#x63A5;&#x89E6;&#x8FC7;&#xFF0C;&#x548C;&#x4ED6;&#x7C7B;&#x4F3C;&#x7684;&#x8FD8;&#x6709;&lt;a href="http://www.cs.fsu.edu/%7Ebaker/devices/lxr/http/source/linux/include/linux/list.h" title="linux list"&gt;Linux list&lt;/a&gt;&#x4EE5;&#x53CA;&lt;a href="http://www.boost.org/doc/libs/release/libs/intrusive/" title="Boost.Intrusive"&gt;Boost.Intrusive&lt;/a&gt;,
+&#x4ED6;&#x4EEC;&#x7684;&#x5171;&#x901A;&#x70B9;&#x5C31;&#x662F;&lt;code&gt;&#x4ECB;&#x5165;&#x5F0F;(intrusive)&lt;/code&gt;, &#x4ECB;&#x5165;&#x5F0F;&#x548C;&#x975E;&#x4ECB;&#x5165;&#x5F0F;&#x5BB9;&#x5668;&#x7684;&#x533A;&#x522B;&#x533A;&#x522B;&#xFF0C;
+&lt;a href="http://www.boost.org/doc/libs/release/libs/intrusive/" title="Boost.Intrusive"&gt;Boost.Intrusive&lt;/a&gt;&#x7684;&#x6587;&#x6863;&#x8BB2;&#x7684;&#x5F88;&#x6E05;&#x695A;&#x3002;&#x6211;&#x603B;&#x7ED3;&#x4E0B;&#x4E3B;&#x8981;&#x7684;&#x4E24;&#x70B9;:&lt;/p&gt;
+
+&lt;h4 id="toc_1"&gt;&#x529F;&#x80FD;&#x4E0A;&lt;/h4&gt;
+
+&lt;p&gt;&#x4ECB;&#x5165;&#x5F0F;&#x5BB9;&#x5668;&#x4FDD;&#x5B58;&#x5BF9;&#x8C61;(&#x7528;&#x6237;&#x6570;&#x636E;)&#x672C;&#x8EAB;&#xFF1B;&#x975E;&#x4ECB;&#x5165;&#x5F0F;&#x5BB9;&#x5668;&#x4FDD;&#x5B58;&#x5BF9;&#x8C61;&#x62F7;&#x8D1D;&#x3002;&lt;/p&gt;
+
+&lt;h4 id="toc_2"&gt;&#x5F62;&#x5F0F;&#x4E0A;&lt;/h4&gt;
+
+&lt;p&gt;&#x4ECB;&#x5165;&#x662F;&#x5BB9;&#x5668;&#x4E0D;&#x9700;&#x8981;&#x8282;&#x70B9;&#xFF0C;&#x5BF9;&#x8C61;(&#x7528;&#x6237;&#x6570;&#x636E;)&#x672C;&#x8EAB;&#x5C31;&#x662F;&#x8282;&#x70B9;&#xFF1B;&#x975E;&#x4ECB;&#x5165;&#x5F0F;&#x5BB9;&#x5668;&#x9700;&#x8981;&#x989D;&#x5916;&#x8282;&#x70B9;&#x3002;
+&#x6B63;&#x662F;&#x5F62;&#x5F0F;&#x4E0A;&#x7684;&#x5DEE;&#x5F02;&#xFF0C;&#x5BFC;&#x81F4;&#x7684;&#x529F;&#x80FD;&#x7684;&#x5DEE;&#x5F02;&#x3002;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    // &#x975E;&#x4ECB;&#x5165;&#x5F0F;&#xFF0C;&#x4E00;&#x4E2A; std::list&amp;lt;MyClass&amp;gt; &#x8282;&#x70B9;&#x7684;&#x53EF;&#x80FD;&#x5B9E;&#x73B0;
+    class list_node {
+        list_node *next;
+        list_node *previous;
+        MyClass value; // &#x5BF9;&#x8C61;(&#x7528;&#x6237;&#x6570;&#x636E;&#xFF09;
+    };
+    // &#x4ECB;&#x5165;&#x5F0F;&#xFF0C; &#x5BF9;&#x8C61;(&#x7528;&#x6237;&#x6570;&#xFF09;&#x636E;&#x672C;&#x8EAB;&#x5C31;&#x542B;&#x6709;&#x8282;&#x70B9;&#x4FE1;&#x606F;
+    class MyClass {
+       MyClass *next;
+       MyClass *previous;
+       // &#x5176;&#x5B83;&#x6210;&#x5458;...
+    };
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&#x5B9E;&#x9645;&#x4E0A;&#xFF0C;&#x5F88;&#x591A;&#x65B9;&#x9762;&#x4ECB;&#x5165;&#x5F0F;&#x5BB9;&#x5668;&#x90FD;&#x8981;&#x4F18;&#x4E8E;&#x975E;&#x4ECB;&#x5165;&#x5F0F;&#x5BB9;&#x5668;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x9009;&#x7528;&#xFF1A;
+&#x94FE;&#x8868;&#x7C7B;&#x6211;&#x4F1A;&#x9009;[queue(3)][queue],&#x5B83;&#x8F83;&#x4E8E;&lt;a href="http://www.boost.org/doc/libs/release/libs/intrusive/" title="Boost.Intrusive"&gt;Boost.Intrusive&lt;/a&gt;&#x4F18;&#x52BF;&#x662F;&lt;code&gt;Trivial(&#x5E73;&#x51E1;)&lt;/code&gt;&#x7684;;
+&#x6811;&#x7C7B;&#x53EA;&#x80FD;&#x9009;&lt;a href="http://www.boost.org/doc/libs/release/libs/intrusive/" title="Boost.Intrusive"&gt;Boost.Intrusive&lt;/a&gt;&#x3002;&lt;/p&gt;
+
+&lt;h3 id="toc_3"&gt;Why&lt;/h3&gt;
+
+&lt;p&gt;&#x5E38;&#x89C4;&#x4F7F;&#x7528;&#x65F6;[queue(3)][queue]&#x8868;&#x73B0;&#x7684;&#x5F88;&#x597D;&#xFF0C;&#x53EF;&#x662F;&#x5728;&#x548C;&#x6A21;&#x7248;&#x6DF7;&#x7528;&#x65F6;&#x5C31;&#x6709;&#x95EE;&#x9898;&#x4E86;&#xFF1A;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    // &#x539F;&#x7248;&#x672C;&#x7684;&#x5B9A;&#x4E49;`&#x542B;&#x5C3E;&#x8282;&#x70B9;&#x5355;&#x94FE;&#x8868;(Singly-linked tailq)`&#x5934;
+    #define STAILQ_HEAD(name, type)                           \
+    struct name {                                             \
+        struct type *stqh_first; // first element             \
+        struct type **stqh_last; // addr of last next element \
+    }
+    // &#x5982;&#x4E0B;&#x7F16;&#x8BD1;
+    // clang++ -std=c++11
+    // g++ -std=c++11
+    template&amp;lt;typename Job&amp;gt;
+    class Worker {
+        STAILQ_HEAD(Head, Job) jobs_; // &#x8868;&#x5934;
+    // clang&#x5982;&#x4E0B;&#x62A5;&#x9519;&#xFF1A;
+    // declaration of &amp;#39;Job&amp;#39; shadows template parameter
+    // &#x5B83;&#x8BA4;&#x4E3A;&#x6211;&#x53C8;&#x5B9A;&#x4E49;&#x4E86; Job
+    // gcc&#x5982;&#x4E0B;&#x62A5;&#x9519;&#xFF1A;
+    // using template type parameter &amp;#39;Job&amp;#39; after &amp;#39;struct&amp;#39;
+    // &#x5B83;&#x8BF4;&#x5F97;&#x66F4;&#x57FA;&#x672C;struct&#x540E;&#x9762;&#x4E0D;&#x80FD;&#x8DDF;&#x6A21;&#x7248;&#x53C2;&#x6570;
+    };
+    // &#x65E0;&#x6548;&#x7684;&#x6539;&#x8FDB;&#x7248;&#x672C;, 
+    // &#x597D;&#x5427;&#xFF0C;&#x544A;&#x8BC9;&#x4F60;&#x5B83;&#x662F;&#x4E00;&#x4E2A;&#x7C7B;&#x578B;
+    #define CPP_STAILQ_HEAD(name, type)                \
+    struct name {                                      \
+        typename type *stqh_first; // first element             \
+        typename type **stqh_last; // addr of last next element \
+    }
+    // &#x7ED3;&#x679C;&#x7F16;&#x8BD1;&#x5668;&#x4ECD;&#x7136;&#x62A5;&#x9519;
+    // clang: C++ requires a type specifier for all declarations
+    // &#x8FD8;&#x662F;&#x8BA4;&#x4E0D;&#x5230;&#xFF0C;typename &#x53EA;&#x80FD;&#x5728;&#x6709;&#x7533;&#x660E;&#x6CA1;&#x5B9E;&#x73B0;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x80FD;&#x7528;, 
+    // &#x5728;&#x5B8F;&#x5C55;&#x5F00;&#x524D;&#xFF0C;type &#x4EC0;&#x4E48;&#x4E5F;&#x4E0D;&#x662F;&#x3002;
+    // gcc: expected nested-name-specifier before &amp;#39;Job&amp;#39;
+    // &#x9700;&#x8981;nested-name-specifier&#x5728;Job&#x524D;, &#x6211;&#x77E5;&#x9053;&#x4E86;&#xFF0C;
+    // &#x81F3;&#x4E8E;nested-name-specifier&#x600E;&#x4E48;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x6211;&#x8FD8;&#x5F97;&#x67E5;C++&#x624B;&#x518C;&#xFF0C;&#x662F;&#x5427;&#xFF1F;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&#x5176;&#x5B9E;&#x76F4;&#x63A5;&#x5B9A;&#x4E49;&#x8868;&#x5934;&#x5C31;&#x884C;&#x4E86;&#xFF0C;&#x8FD9;&#x662F;&#x56DE;&#x907F;&#x95EE;&#x9898;&#xFF1A;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    struct Head {
+        Job *stqh_first;
+        Job **stqh_last;
+    } jobs_;
+    // &#x6216;&#x8005;
+    template&amp;lt;typename Type&amp;gt; struct Head {
+        Type *stqh_first;
+        Type **stqh_last;
+    };
+    Head&amp;lt;Job&amp;gt; jobs_;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&#x6211;&#x60F3;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#xFF0C;&#x4EE5;&#x53CA;&#x66F4;&#x6DF1;&#x5165;&#x7684;&#x5B66;&#x4E60;&#xFF0C;&#x6240;&#x4EE5;&#x5C1D;&#x8BD5;&#x628A;[queue(3)][queue]&#x201C;&#x7FFB;&#x8BD1;&#x201D;&#x6210;c++&#x7248;&#x672C;&#x3002;&lt;/p&gt;
+
+&lt;h3 id="toc_4"&gt;Code&lt;/h3&gt;
+
+&lt;p&gt;&#x89C1;&#x6211;&#x7684;Github&lt;a href="https://github.com/henglinli/TheServer/blob/master/TheServer/queue.hh" title="queue.hh"&gt;queue.hh&lt;/a&gt;&#x3002;&lt;/p&gt;
+
+&lt;hr&gt;
+</description>
+    </item>
     <item>
       <title>try Concurrency Kit and TBB</title>
       <link>https://henglinli.github.io/try/try-concurrency-kit-and-tbb</link>
@@ -142,65 +241,6 @@ Malloc Zone&#x6709;&#x4E2A;&lt;code&gt;malloc_zone_t&lt;/code&gt;:&lt;/p&gt;
 &lt;p&gt;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#x4ECA;&#x540E;&#x518D;&#x7ED9;&#x51FA;&#xFF0C;&#x5E94;&#x4E3A;&#x6211;&#x60F3;&#x628A;TCMalloc&#x4ECE;gperftools&#x4E2D;&#x63D0;&#x53D6;&#x51FA;&#x6765;&#xFF0C;
 &#x4E0D;&#x559C;&#x6B22;&#x8001;&#x7684;autoconf&#xFF0C;&#x60F3;&#x6362;&#x6210;Cmake&#x3002;
 &#x5410;&#x69FD;&#xFF1A;OS X&#x4E0A;&#x7F16;&#x8BD1;TCMalloc&#x597D;&#x591A;&#x8B66;&#x544A;&#xFF0C;&#x4ED6;&#x4EEC;&#x8FD8;&#x5728;&#x7528;brk/sbrk......&lt;/p&gt;
-
-&lt;hr&gt;
-</description>
-    </item>
-    <item>
-      <title>Try OS X static link</title>
-      <link>https://henglinli.github.io/try/try-os-x-static-link</link>
-      <pubDate>2013-08-21</pubDate>
-      <description>&lt;h3 id="toc_0"&gt;&#x5F00;&#x59CB;&lt;/h3&gt;
-
-&lt;p&gt;&#x7531;&#x4E8E;clang&#x9ED8;&#x8BA4;&#x7684;c++&#x6807;&#x51C6;&#x5E93;&#x8FD8;&#x662F;libstdc++,&#x6211;&#x5C31;&#x60F3;&#x88C5;gcc-4.8,&#x9664;&#x4E86;&#x7F51;&#x7EDC;&#x95EE;&#x9898;&#x5916;&#x8FD8;&#x7B97;&#x987A;&#x5229;&#xFF1A;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;brew tap homebrew/versions
-brew install gcc48
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&#x5149;&#x662F;&#x7F16;&#x8BD1;gcc&#x5C3D;&#x7136;&#x8017;&#x65F6;47&#x5206;&#x949F;&#xFF01;&#x5B89;&#x88C5;&#x4E4B;&#x540E;&#x6D4B;&#x8BD5;&#x4E0B;&#xFF1A;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;int main() { return 0; } // empty.cc
-gcc-4.8 empty.cc // OK
-gcc-4.8 empty.cc -static // ld: library not found for -lcrt0.o
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&#x627E;&#x4E0D;&#x5230;crt0.o, &#x90A3;&#x5C3C;&#xFF1F;&lt;/p&gt;
-
-&lt;h3 id="toc_1"&gt;&#x7EE7;&#x7EED;&lt;/h3&gt;
-
-&lt;p&gt;&#x5728;/usr/lib/&#x548C;Xcode&#x7684;SDK&#x4E2D;&#x90FD;&#x6CA1;&#x6709;&#x627E;&#x5230;&#x5B83;&#xFF0C;&#x4E8E;&#x662F;google&#x4E86;&#x4E00;&#x4E0B;&#x53D1;&#x73B0;&#x4E86;&lt;a href="https://developer.apple.com/library/mac/qa/qa1118/_index.html" title="qa crt0.o"&gt;Apple&#x7684;Technical Q&amp;amp;A QA1118&lt;/a&gt;,&#x5B83;&#x8FD8;&#x8BF4;&#x6559;&#x4E86;&#x4E00;&#x756A;&#xFF0C;&#x7136;&#x540E;&#x8BF4;&#x4E0D;&#x652F;&#x6301;&#x9759;&#x6001;&#x94FE;&#x63A5;(Apple does not support statically linked binaries on Mac OS X.), &#x4F46;&#x662F;&#x5B83;&#x7ED9;&#x51FA;&#x4E86;&#x65B9;&#x5411;&#xFF0C;&#x8BA9;&#x6211;&#x4EEC;&#x81EA;&#x5DF1;&#x7F16;&#x8BD1;&lt;em&gt;Csu (C starup)&lt;/em&gt;&#x3002;&#x4E0B;&#x8F7D; &lt;a href="http://www.opensource.apple.com/tarballs/Csu/Csu-79.tar.gz"&gt;http://www.opensource.apple.com/tarballs/Csu/Csu-79.tar.gz&lt;/a&gt; &#x5E76;&#x4E14;&#x7F16;&#x8BD1;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;cd Csu-79
-make // &#x7F16;&#x8BD1;
-cp crt0.o /usr/local/lib //&#x62F7;&#x8D1D;&#x5230;local
-...
-gcc-4.8 empty.cc -static
-//undefined symbols for architecture x86_64:
-//  &amp;quot;_exit&amp;quot;, referenced from:
-//     start in crt0.o
-//&#x73B0;&#x5728;&#x53EA;&#x5DEE;&#x4E00;&#x4E2A;_exit&#x4E86;&#x6CA1;&#x6CD5;&#x94FE;&#x63A5;&#x4E86;&#x3002;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id="toc_2"&gt;&#x7EE7;&#x7EED;&lt;/h3&gt;
-
-&lt;p&gt;man&#x4E86;&#x4E00;&#x4E0B;&lt;em&gt;exit&#x53D1;&#x73B0;&#x4ED6;&#x662F;&#x5728;unistd.h&#x4E2D;&#x7684;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x5B83;&#x5728;C&#x5E93;&#x4E2D;&#xFF0C;&#x987A;&#x5E26;&#x63D0;&#x4E00;&#x4E0B;OS X&#x7684;C&#x5E93;&#x5305;&#x542B;&#x5728;System&#x5E93;&#x4E2D;&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x5C31;&#x51B3;&#x5B9A;&#x81EA;&#x5DF1;&#x7F16;&#x8BD1;libC&#x3002;&#x4E0B;&#x8F7D; &lt;a href="http://www.opensource.apple.com/tarballs/Libc/Libc-825.26.tar.gz"&gt;http://www.opensource.apple.com/tarballs/Libc/Libc-825.26.tar.gz&lt;/a&gt; &#x5E76;&#x4E14;&#x7F16;&#x8BD1;&#x3002;&#x5B83;&#x63D0;&#x4F9B;&#x4E86;Xcode&#x7684;project&#xFF0C;&#x672C;&#x4EE5;&#x4E3A;&#x4F1A;&#x975E;&#x5E38;&#x987A;&#x5229;&#xFF0C;&#x7ED3;&#x679C;&#x5C31;&#x662F;&#x8FD9;&#x4E2A;libC&#x641E;&#x4E86;&#x6211;&#x534A;&#x5929;&#xFF0C;&#x4E3B;&#x8981;&#x7684;&#x95EE;&#x9898;&#x5728;&#x4E8E;libC&#x9700;&#x8981;System Framwork &#x7684; PrivateHeaders&#xFF0C;&#x4F46;&#x662F;SDK&#x548C;&#x7CFB;&#x7EDF;&#x90FD;&#x4E0D;&#x63D0;&#x4F9B;&#xFF0C;&#x6211;&#x4E8E;&#x662F;&#x8FD8;&#x5F97;&#x4ECE;xnu&#x7684;&#x6E90;&#x4EE3;&#x7801;&#x4E2D;&#x63D0;&#x53D6;&#x4E86;&#x51E0;&#x4E2A;&#x9700;&#x8981;&#x7684;&#x5934;&#x6587;&#x4EF6;&#xFF0C;&#x8FD8;&#x5F97;&#x5C0F;&#x5C0F;&#x4FEE;&#x6539;&#x6E90;&#x4EE3;&#x7801;&#xFF08;&#x4E3B;&#x8981;&#x662F;&#x4E00;&#x4E0B;&#x5B8F;&#xFF09;&#xFF0C;&#x6700;&#x540E;&#x7EC8;&#x4E8E;&#x5F97;&#x5230;&#x4E86;libc.a&#x548C;libc&lt;/em&gt;debug.a&#xFF0C;&#x8BD5;&#x8BD5;&#x770B;&#xFF1A;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;gcc-4.8 empty.cc -static /usr/local/lib/libc.a
-//Undefined symbols for architecture x86_64:
-//&amp;quot;__Block_copy&amp;quot;, referenced from:
-//_atexit_b in libc.a(atexit.o)
-//&amp;quot;___assert_rtn&amp;quot;, referenced from:
-//_pthread_create in libc.a(pthread.o)
-//_pthread_create_suspended_np in libc.a(pthread.o)
-//...
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&#x94FE;&#x63A5;&#x9519;&#x8BEF;&#x8FD8;&#x6709;&#x5F88;&#x591A;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x548C;pthread&#x7684;&#x94FE;&#x63A5;&#x4F9D;&#x8D56;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;libSystem&#x7684;&#x5176;&#x4ED6;&#x90E8;&#x5206;&#x4E5F;&#x5F97;&#x7F16;&#x8BD1;&#x51FA;&#x6765;&#xFF0C;&#x8981;&#x4FEE;&#x6539;&#x7684;&#x592A;&#x591A;&#x4E86;&#xFF0C;&#x800C;&#x4E14;&#x6211;&#x7F16;&#x8BD1;libc&#x7684;&#x65F6;&#x5019;&#x8FD8;&#x53BB;&#x6389;&#x4E86;&#x4E00;&#x4E2A;dispatch&#x76F8;&#x5173;&#x7684;&#x5934;&#x6587;&#x4EF6;&#x3002;&lt;/p&gt;
-
-&lt;h3 id="toc_3"&gt;&#x653E;&#x5F03;&lt;/h3&gt;
-
-&lt;p&gt;&#x5982;&#x679C;&#x7EE7;&#x7EED;&#x4E0B;&#x53BB;&#xFF0C;&#x4FEE;&#x6539;&#x4E0B;libC&#x7684;project&#xFF08;&#x5B83;&#x9ED8;&#x8BA4;&#x7F16;&#x8BD1;&#x51FA;libSystem.dylib)&#xFF0C;&#x4F46;&#x662F;&#x4E5F;&#x4E0D;&#x80FD;&#x4FDD;&#x8BC1;&#x5B83;&#x8FD0;&#x884C;&#x7A33;&#x5B9A;&#x554A;&#xFF0C;&#x4E8E;&#x662F;&#x5F97;&#x51FA;&#x7ED3;&#x8BBA;&#xFF1A;OS X&#x4E0D;&#x652F;&#x6301;&#x52A8;&#x6001;&#x94FE;&#x63A5;&#xFF01;&lt;/p&gt;
 
 &lt;hr&gt;
 </description>

@@ -61,6 +61,44 @@
 <div class="row-fluid">
   <div class="span12">
     <div class="post">
+  <h3 class="title"><a href="/try/try-translate-queue-3-to-cpp">try translate queue(3) to cpp</a> <span class="date">2013-12-12</span></h3>
+
+  <div class="summary ellipsis">
+<h3 id="toc_0">Motivation</h3>
+
+<p>[queue(3)][queue]&#24456;&#26089;&#23601;&#25509;&#35302;&#36807;&#65292;&#21644;&#20182;&#31867;&#20284;&#30340;&#36824;&#26377;<a href="http://www.cs.fsu.edu/%7Ebaker/devices/lxr/http/source/linux/include/linux/list.h" title="linux list">Linux list</a>&#20197;&#21450;<a href="http://www.boost.org/doc/libs/release/libs/intrusive/" title="Boost.Intrusive">Boost.Intrusive</a>,
+&#20182;&#20204;&#30340;&#20849;&#36890;&#28857;&#23601;&#26159;<code>&#20171;&#20837;&#24335;(intrusive)</code>, &#20171;&#20837;&#24335;&#21644;&#38750;&#20171;&#20837;&#24335;&#23481;&#22120;&#30340;&#21306;&#21035;&#21306;&#21035;&#65292;
+<a href="http://www.boost.org/doc/libs/release/libs/intrusive/" title="Boost.Intrusive">Boost.Intrusive</a>&#30340;&#25991;&#26723;&#35762;&#30340;&#24456;&#28165;&#26970;&#12290;&#25105;&#24635;&#32467;&#19979;&#20027;&#35201;&#30340;&#20004;&#28857;:</p>
+
+<h4 id="toc_1">&#21151;&#33021;&#19978;</h4>
+
+<p>&#20171;&#20837;&#24335;&#23481;&#22120;&#20445;&#23384;&#23545;&#35937;(&#29992;&#25143;&#25968;&#25454;)&#26412;&#36523;&#65307;&#38750;&#20171;&#20837;&#24335;&#23481;&#22120;&#20445;&#23384;&#23545;&#35937;&#25335;&#36125;&#12290;</p>
+
+<h4 id="toc_2">&#24418;&#24335;&#19978;</h4>
+
+<p>&#20171;&#20837;&#26159;&#23481;&#22120;&#19981;&#38656;&#35201;&#33410;&#28857;&#65292;&#23545;&#35937;(&#29992;&#25143;&#25968;&#25454;)&#26412;&#36523;&#23601;&#26159;&#33410;&#28857;&#65307;&#38750;&#20171;&#20837;&#24335;&#23481;&#22120;&#38656;&#35201;&#39069;&#22806;&#33410;&#28857;&#12290;
+&#27491;&#26159;&#24418;&#24335;&#19978;&#30340;&#24046;&#24322;&#65292;&#23548;&#33268;&#30340;&#21151;&#33021;&#30340;&#24046;&#24322;&#12290;</p>
+
+<pre><code>    // &#38750;&#20171;&#20837;&#24335;&#65292;&#19968;&#20010; std::list&lt;MyClass&gt; &#33410;&#28857;&#30340;&#21487;&#33021;&#23454;&#29616;
+    class list_node {
+        list_node *next;
+        list_node *previous;
+        MyClass value; // &#23545;&#35937;(&#29992;&#25143;&#25968;&#25454;&#65289;
+    };
+    // &#20171;&#20837;&#24335;&#65292; &#23545;&#35937;(&#29992;&#25143;&#25968;&#65289;&#25454;&#26412;&#36523;&#23601;&#21547;&#26377;&#33410;&#28857;&#20449;&#24687;
+    class MyClass {
+       MyClass *next;
+       MyClass *previous;
+       // &#20854;&#23427;&#25104;&#21592;...
+    };
+</code></pre>
+</div>
+
+  <div class="more">
+    <a href="/try/try-translate-queue-3-to-cpp" class="btn btn-small">read more..</a>
+  </div>
+</div>
+<div class="post">
   <h3 class="title"><a href="/try/try-concurrency-kit-and-tbb">try Concurrency Kit and TBB</a> <span class="date">2013-12-05</span></h3>
 
   <div class="summary ellipsis">
@@ -259,37 +297,6 @@ std::string srp6_group_identifier(const BigInt&amp; N, const BigInt&amp; g);
 
   <div class="more">
     <a href="/try/try-tcmalloc" class="btn btn-small">read more..</a>
-  </div>
-</div>
-<div class="post">
-  <h3 class="title"><a href="/try/try-os-x-static-link">Try OS X static link</a> <span class="date">2013-08-21</span></h3>
-
-  <div class="summary ellipsis">
-<h3 id="toc_0">&#24320;&#22987;</h3>
-
-<p>&#30001;&#20110;clang&#40664;&#35748;&#30340;c++&#26631;&#20934;&#24211;&#36824;&#26159;libstdc++,&#25105;&#23601;&#24819;&#35013;gcc-4.8,&#38500;&#20102;&#32593;&#32476;&#38382;&#39064;&#22806;&#36824;&#31639;&#39034;&#21033;&#65306;</p>
-
-<pre><code>brew tap homebrew/versions
-brew install gcc48
-</code></pre>
-
-<p>&#20809;&#26159;&#32534;&#35793;gcc&#23613;&#28982;&#32791;&#26102;47&#20998;&#38047;&#65281;&#23433;&#35013;&#20043;&#21518;&#27979;&#35797;&#19979;&#65306;</p>
-
-<pre><code>int main() { return 0; } // empty.cc
-gcc-4.8 empty.cc // OK
-gcc-4.8 empty.cc -static // ld: library not found for -lcrt0.o
-</code></pre>
-
-<p>&#25214;&#19981;&#21040;crt0.o, &#37027;&#23612;&#65311;</p>
-
-<h3 id="toc_1">&#32487;&#32493;</h3>
-
-<p>&#22312;/usr/lib/&#21644;Xcode&#30340;SDK&#20013;&#37117;&#27809;&#26377;&#25214;&#21040;&#23427;&#65292;&#20110;&#26159;google&#20102;&#19968;&#19979;&#21457;&#29616;&#20102;<a href="https://developer.apple.com/library/mac/qa/qa1118/_index.html" title="qa crt0.o">Apple&#30340;Technical Q&amp;A QA1118</a>,&#23427;&#36824;&#35828;&#25945;&#20102;&#19968;&#30058;&#65292;&#28982;&#21518;&#35828;&#19981;&#25903;&#25345;&#38745;&#24577;&#38142;&#25509;(Apple does not support statically linked binaries on Mac OS X.), &#20294;&#26159;&#23427;&#32473;&#20986;&#20102;&#26041;&#21521;&#65292;&#35753;&#25105;&#20204;&#33258;&#24049;&#32534;&#35793;<em>Csu (C starup)</em>&#12290;&#19979;&#36733; <a href="http://www.opensource.apple.com/tarballs/Csu/Csu-79.tar.gz">http://www.opensource.apple.com/tarballs/Csu/Csu-79.tar.gz</a> &#24182;&#19988;&#32534;&#35793;:</p>
-
-</div>
-
-  <div class="more">
-    <a href="/try/try-os-x-static-link" class="btn btn-small">read more..</a>
   </div>
 </div>
 
