@@ -157,6 +157,14 @@
 
 <p>见我的Github<a href="https://github.com/henglinli/TheServer/blob/master/TheServer/queue.hh" title="queue.hh">queue.hh</a>。</p>
 
+<h3 id="toc_5">Update</h3>
+
+<p>2013.12.13
+由于尝试自己从头实现类似于<a href="http://www.boost.org/doc/libs/release/libs/intrusive/" title="Boost.Intrusive">Boost.Intrusive</a>的容器太耗时，
+我尝试从<a href="http://www.boost.org/doc/libs/release/libs/intrusive/" title="Boost.Intrusive">Boost.Inrusive</a>中提取代码，却发现<a href="http://www.boost.org/doc/libs/release/libs/intrusive/" title="Boost.Intrusive">Boost.Inrusive</a>
+的normal<em>link模式下，它的hook实际上就是<code>平凡的(Trivial)</code>的，只是没有写成Trivial，为了能达到该目的，
+将<code>boost::intrusive::generic_hook</code>偏特化normal</em>link就行了，代码见[generic<em>hook.hh][generic</em>hook_hh]。</p>
+
 <hr>
 
     </div>
