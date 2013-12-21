@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>object pool的实现</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="object pool implementation">
+    <meta name="author" content="Henglin Li">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+<link href='/assets/stylesheets/bootstrap.min-e0e2914ec503fd07e90c90bb71395057.css' type='text/css' rel='stylesheet' media='all'>
+<link href='/assets/stylesheets/style-e81fa375b231bedf6cb2dbc6653570cc.css' type='text/css' rel='stylesheet' media='all'>
+<link href='/assets/stylesheets/google_prettify/sons-of-obsidian-afb0925bfa2d994f17dab93e13fbf999.css' type='text/css' rel='stylesheet' media='all'>
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container-narrow">
+          <a class="brand" href="/">henglinli.github.io</a>
+          <ul class="nav">
+              
+                <li><a href="/archive">Archive</a></li>
+              
+              
+                <li><a href="/tags">Tags</a></li>
+              
+              
+                <li><a href="/categories">Categories</a></li>
+              
+              
+                <li><a href="/pages">Pages</a></li>
+              
+              
+                <li><a href="/about">About Me</a></li>
+              
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<div class="page-header">
+  <h1>object pool的实现 </h1>
+</div>
+
+<div class="row-fluid post-full">
+  <div class="span12">
+    <div class="date">
+      <span>2013-12-21</strong>
+    </div>
+    <div class="content">
+      <h3 id="toc_0">动机</h3>
+
+<p>C++编程时，总难免要动态内存申请（特别是STL），而且总会是Class Object，<br>
+也就是总会遇到固定大小的内存管理。如果会经常用到大量的某种Class Object，<br>
+最好是<code>池化</code>它。（其实如果能限制Class Object 的数量的话，我会首选数组。）</p>
+
+<h3 id="toc_1">设计</h3>
+
+<p>我<code>个人单方面地</code>理解为动态内存分配很慢，所以我即使动态申请也要按块(Block)来。<br>
+<a href="https://code.google.com/p/gperftools/" title="gperftools">tcmalloc</a> 认为块64k是合适的，所以我选择128k，将来这个数值还得更大。<br>
+Block用单链表链接起来：</p>
+
+<pre><code>    const size_t kDefaultBlockSize(128*1024); 
+    struct Block {
+        SListHook hook_; // Boost.Intrusive slist hook
+        // 让Block的大小恒为 kDefaultBlockSize
+        char values_[kDefaultBlockSize - sizeof(SListHook)];
+    };  
+    SList&lt;Block&gt; block_list; // Block list，已分配的块链表
+</code></pre>
+
+<p>得到内存块后，要在上面分配实际的Class Ojbect了，为了能方便地回收Class Object，<br>
+Class Object也得用单链表链接起来：</p>
+
+<pre><code>    struct Value {
+        SListHook hook_; // Boost.Intrusive slist hook
+        char data_[sizeof(Class Object)]
+    };
+    SList&lt;Value&gt; free_list; // 已回收的Value链表
+</code></pre>
+
+<p>完整的结构如下:</p>
+
+<pre><code>    template&lt;typename Type&gt;
+    struct Pool {
+    public:
+        // 构造一个Type object
+        template&lt;typename... Args&gt;
+        Type* Construct(Args... args) {
+            auto p = GetFromFreeList(); // 先从free list分配
+            or p = GeFromCurrentBlock(); // 再从块Block中分配
+            return new(p) Type(std::forward(args)); //完美转发构造
+        }
+        // 回收不需要的Type objcet
+        void Destruct(Type&amp; notused) {
+            free_list_ push_front notused; // 放到 freelist中
+            // 此处如果考虑释放多余的Block回系统的话
+            // 下面的 Block可能需要重新设计, 比如
+            // 每个 Block 含有一个 free list，
+            // free list size() = Block::Values() 就释放掉该Block
+            // 
+            #if NOTE
+            struct Block {
+                SListHook hook_;
+                char values_[n];
+                SList&lt;Value&gt; free_list_;
+            }
+            #endif
+        }
+    protected:
+        // 从free list 中获取 Value
+        Value* GetFromFreeList() {
+            return free_list_ front;
+        }
+        // 从当前Block获取
+        Value* GeFromCurrentBlock() {
+            if (block_) { // 当前Block可用
+                // 当前Block用完了, 申请新的Block
+                if(index &gt;= Bolock::Values()) { 
+                    block_ = Block::New();
+                    block_list_ push_front block_; // 链入 block list
+                }
+            } else { // 当前Block不可用，申请新的Block
+                block_ = Block::New();
+                block_list_ push_front block_; // 链入 block list
+            }
+            // 根据 index 获取 value
+            return block_-&gt;values_ + index++;
+        }
+    private:
+        // Type ＋ 单链表节点 = Value
+        struct Value {
+            SListHook hook_; // Boost.Intrusive slist hook
+            // 此处不写作 Type data_; 的原因是 Type 可能不是可平凡构造的。 
+            char data_[sizeof(Type)]; 
+        };
+        // 一个块Block可分割成值Value的个数
+        constexpr size_t Values() {
+            return (kDefaultBlockSize-sizeof(SListHook))/sizeof(Value);
+        }   
+        // Values() Value + 单链表节点 = Block = kDefaultBlockSize
+        struct Block {
+            // 申请一个块的内存
+            static Block* New() {
+                return mmap(Block); // 用mmap(2)
+            }
+            // 释放一个块的内存
+            static void Delete(Block* notused) {
+                munmap(notused); // munmap(2) 
+            }
+            SListHook hook_; // Boost.Intrusive slist hook
+            // 让Block的大小恒为 kDefaultBlockSize
+            value values_[Values()];
+        };
+        // 当前可用块Block
+        Block* block_;
+        // 当前块Block中的下一个可用Value在数组中的位置。
+        size_t index_;
+        SList&lt;Value&gt; free_list_; // free list,已回收的Value链表
+        SList&lt;Block&gt; block_list_; // Block list,已分配的块链表
+    };
+</code></pre>
+
+<h3 id="toc_2">实现</h3>
+
+<p>代码放在我的Github<a href="https://github.com/henglinli/TheServer/blob/master/TheServer/memory.hh" title="object pool">memory</a>上。</p>
+
+<h3 id="toc_3">后话</h3>
+
+<p>多线程下，让Pool object是 <code>thread_local</code>的就行了；
+不定大小的非频繁使用的Class object我会使用<a href="https://code.google.com/p/gperftools/" title="gperftools">tcmalloc</a>。</p>
+
+<hr>
+
+    </div>
+    <ul class="tag_box inline">
+      <li><i class="icon-folder-open"></i></li>
+      <li>
+        <a href="/categories#study-ref">study <span>2</span></a>
+      </li>
+    </ul>
+    <ul class="tag_box inline">
+      <li><i class="icon-tags"></i></li>
+      <li>
+        <a href="/tags#C++-ref">C++ <span>4</span></a>
+      </li>
+      <li>
+        <a href="/tags#memory-ref">memory <span>1</span></a>
+      </li>
+      <li>
+        <a href="/tags#object pool-ref">object pool <span>1</span></a>
+      </li>
+    </ul>
+    <hr>
+    <div class="pagination">
+      <ul>
+          <li class="prev"><a href="/try/try-translate-queue-3-to-cpp" title="try translate queue(3) to cpp">&larr; Previous</a></li>
+
+          <li><a href="/archive">Archive</a></li>
+
+          <li class="next disabled"><a>Next &rarr;</a>
+      </ul>
+    </div>
+    <hr>
+    <div id="disqus_thread"></div>
+<script>
+    var disqus_developer = 1;
+    var disqus_shortname = 'henglinli'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  </div>
+</div>
+
+
+      </div>
+
+      <hr>
+      <div class="footer">
+        <p>&copy; Henglin Li 2013
+          with help from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Google Prettify -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+<!-- end Google Prettify -->
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-42955283-1']);
+  _gaq.push(['_trackPageview']);
+  
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+    
+  </body>
+</html>
