@@ -1,4 +1,4 @@
 henglinli.github.io
 ===================
 
-henglinli's Ruhoh blog
+henglinli's blog
