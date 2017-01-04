@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: default
 title: hello new blog
 ---
 # [](#header-1) Hello new blog / 新博客
