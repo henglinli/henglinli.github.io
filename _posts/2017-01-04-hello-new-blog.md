@@ -23,7 +23,7 @@ golang or erlang?
   {% else %}
     <span class="previous">Previous/上一条</span>
   {% endif %}
-  <span class="page_number ">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
+  <span class="page_number ">{{ paginator.page }}       {{ paginator.total_pages }}</span>
   {% if paginator.next_page %}
     <a href="/page{{ paginator.next_page }}" class="next">Next/下一条</a>
   {% else %}
