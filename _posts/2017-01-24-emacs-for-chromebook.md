@@ -7,8 +7,8 @@ title: emacs for chromebook
 [emacs-25.1](emacs) travis build with --without-all --without-x --without-makeinfo, see also [.travis.yml](travis.yml)
 travis CI上采用参数--without-all --without-x --without-makeinfo构建的[emacs-25.1](emacs)，参见[.travis.yml](travis.yml)
 
-#### install location is /usr/local/emacs.
-#### 安装路径为/us/local/emacs
+#### install location is /usr/local/emacs. libtinfo.so also packed.
+#### 安装路径为/us/local/emacs。libtinfo.so 包含在压缩包中。
 
 [emacs]: https://github.com/henglinli/build-emacs/releases/download/25.1/emacs.tar.gz "emacs-build release"
 [travis.yaml]: https://github.com/henglinli/build-emacs/blob/master/.travis.yml  "emacs-build .travis.yml"
