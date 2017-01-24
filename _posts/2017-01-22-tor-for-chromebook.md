@@ -1,7 +1,6 @@
 ---
 layout: default
 title: TOR for chromebook
-comments: true
 ---
 # [](#header-1) TOR for chromebook / chromebook可用的TOR分享
 Dowload [this](/assets/binary/tor.tar.gz) tarball and extarct to /usr/local/ then run it, tested on HP chromebook 13 G1.
@@ -53,19 +52,3 @@ Dowload [this](/assets/binary/tor.tar.gz) tarball and extarct to /usr/local/ the
   {% endif %}
 </div>
 {% endif %}
-{% if page.comments %}
-<div id="disqus_thread"></div>
-<script>
-var disqus_config = function () {
-this.page.url = "{{ page.url }}";
-this.page.identifier = "{{ page.id }}";
-};
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = '//EXAMPLE.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-{% endif %} 
