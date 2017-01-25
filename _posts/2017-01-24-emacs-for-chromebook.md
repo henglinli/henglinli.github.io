@@ -5,6 +5,7 @@ title: emacs for chromebook
 # [](#header-1) emacs for chromebook / chromebook可用的emacs
 
 [emacs-25.1](https://github.com/henglinli/build-emacs/releases/download/25.1/emacs.tar.gz) travis build with --without-all --without-x --without-makeinfo, see also [.travis.yml](https://github.com/henglinli/build-emacs/blob/master/.travis.yml)
+
 travis CI上采用参数--without-all --without-x --without-makeinfo构建的[emacs-25.1](https://github.com/henglinli/build-emacs/releases/download/25.1/emacs.tar.gz)，参见[.travis.yml](https://github.com/henglinli/build-emacs/blob/master/.travis.yml)
 
 #### install location is /usr/local/emacs. libtinfo.so also packed.
