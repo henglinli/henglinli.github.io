@@ -7,4 +7,4 @@ layout: default
 *  [TOR for chromebook / chromebook可用的TOR]({% post_url 2017-01-22-tor-for-chromebook %})
 *  [emacs for chromebook / chromebook可用的emacs]({% post_url 2017-01-24-emacs-for-chromebook %})
 *  [another SOCKS porxy OTP app]({% post_url 2017-02-20-another-SOCKS-proxy-OPT-app %})
-*  [Bilocker summary/ BitLocker入坑纪（续） ] ({% post_url 2012-02-04-BitLocker-summary.md %})
+*  [Bilocker summary / BitLocker入坑纪（续）]({% post_url 2012-02-04-BitLocker-summary.md %})
